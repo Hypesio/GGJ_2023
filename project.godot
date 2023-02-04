@@ -21,12 +21,18 @@ _global_script_class_icons={
 [application]
 
 config/name="gamejam2023"
-run/main_scene="res://src/main/Main.tscn"
+run/main_scene="res://src/main/Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Utils="*res://src/autoloads/Utils.gd"
+
+[debug]
+
+shapes/collision/shape_color=Color( 0.0588235, 1, 0.160784, 1 )
+shapes/navigation/geometry_color=Color( 0.101961, 1, 0.701961, 1 )
+shapes/navigation/disabled_geometry_color=Color( 1, 0.701961, 0.101961, 1 )
 
 [gui]
 

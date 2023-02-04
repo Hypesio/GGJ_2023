@@ -34,10 +34,10 @@ var was_walking = false
 var MOUSE_SENSITIVITY = 0.05
 
 signal object_picked (Obj)
+signal pause
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
 
 func _physics_process(delta):
 	if not tweening:
@@ -152,21 +152,18 @@ func process_input(delta):
 				tween.connect("finished", self, "not_anymore_tweening")
 				
 	if Input.is_action_just_pressed("crouch"):
-		camera.global_translation.y -= 1
+		camera.global_translation.y -= 0.5
 		ACCEL = 0.5
 		is_crouching = true
 	elif Input.is_action_just_released("crouch"):
-		camera.global_translation.y += 1
+		camera.global_translation.y += 0.5
 		ACCEL = 4.5
 		is_crouching = false
 		
 	# ----------------------------------
 	# Capturing/Freeing the cursor
 	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		emit_signal("pause")			
 	# ----------------------------------
 	
 func process_movement(delta):
