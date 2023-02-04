@@ -3,6 +3,7 @@ extends RigidBody
 class_name Obj
 
 onready var obj_mesh_material: Material
+onready var animation_player := $AnimationPlayer
 var shader: ShaderMaterial
 export var base_outline_color: Color
 export var group_outline_color: Color
@@ -10,6 +11,7 @@ export var size: float
 
 var is_outline := false
 var is_group_outline := false
+var is_held := false
 
 export (Utils.ObjectType) var type: int
 export var id: int
@@ -36,9 +38,10 @@ func stop_group_highlight():
 	is_group_outline = false
 	
 func hover_highlight():
-	shader.set_shader_param("thickness", 0.1)
-	shader.set_shader_param("outline_color", base_outline_color)
-	is_outline = true
+	if not is_held:
+		shader.set_shader_param("thickness", 0.1)
+		shader.set_shader_param("outline_color", base_outline_color)
+		is_outline = true
 
 func stop_hover_highlight():
 	if is_group_outline:
@@ -49,3 +52,8 @@ func stop_hover_highlight():
 
 func interact():
 	print("interacting...")
+
+func collect():
+	animation_player.play("collect")
+	yield(animation_player, "animation_finished")
+	queue_free()

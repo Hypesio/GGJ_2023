@@ -14,6 +14,7 @@ onready var camera = $Rotation_Helper/Camera
 onready var rotation_helper = $Rotation_Helper
 onready var raycast = $Rotation_Helper/Camera/RayCast
 onready var hold_position = $Rotation_Helper/Camera/HoldPosition
+onready var crosshair = $HUD/Crosshair
 
 var held_object: RigidBody
 var held_object_old_position: Vector3
@@ -26,6 +27,7 @@ var collider_family_tree
 var is_crouching := false
 var ACCEL = 4.5
 var family_tree_script = null
+var tweening := false
 
 var MOUSE_SENSITIVITY = 0.05
 
@@ -36,11 +38,15 @@ func _ready():
 	
 
 func _physics_process(delta):
-	process_input(delta)
-	process_movement(delta)
+	if not tweening:
+		process_input(delta)
+		process_movement(delta)
 	
 func on_family_tree() :
 	family_tree_script.is_focus_on(camera)
+	
+func not_anymore_tweening() -> void:
+	tweening = false
 
 func process_input(delta):
 	if focus_on_family_tree : 
@@ -87,14 +93,23 @@ func process_input(delta):
 			var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 			tween.tween_property(held_object, "translation", held_object_old_position, 1.0)
 			tween.parallel().tween_property(held_object, "rotation_degrees", held_object_old_rotation, 1.0)
+			tweening = true
+			tween.connect("finished", self, "not_anymore_tweening")
+			held_object.is_held = false
 			held_object = null
+			crosshair.visible = true
 		elif focus_on_family_tree : 
 			focus_on_family_tree = false
-			camera.global_translation = original_camera_pos
-			camera.global_rotation = original_camera_rotation
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			collider_family_tree.disabled = false
+			var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+			tween.tween_property(camera, "global_translation", original_camera_pos, 1.0)
+			tween.parallel().tween_property(camera, "global_rotation", original_camera_rotation, 1.0)
+			tweening = true
+			tween.connect("finished", self, "not_anymore_tweening")
+			crosshair.visible = true
 		elif raycast.is_colliding():
+			crosshair.visible = false
 			if (raycast.get_collider().is_in_group("FamilyTree")) :
 				collider_family_tree = raycast.get_collider().get_child(0)
 				collider_family_tree.disabled = true
@@ -102,23 +117,30 @@ func process_input(delta):
 				focus_on_family_tree = true
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				# Force camera position
-				var camera_pos = raycast.get_collider().get_child(1)
+				var camera_pos = raycast.get_collider().get_node("CameraFront")
 				original_camera_pos = camera.global_translation
 				original_camera_rotation = camera.global_rotation
-				camera.global_translation = camera_pos.global_translation
-				camera.global_rotation = camera_pos.global_rotation
+				var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+				tween.tween_property(camera, "global_translation", camera_pos.global_translation, 1.0)
+				tween.parallel().tween_property(camera, "global_rotation", camera_pos.global_rotation, 1.0)
+				tweening = true
+				tween.connect("finished", self, "not_anymore_tweening")
 			else :
 				held_object = raycast.get_collider()
+				held_object.is_held = true
+				held_object.stop_hover_highlight()
 				hold_position.translation.z = -held_object.size
 				held_object_old_position = held_object.global_transform.origin
 				held_object_old_rotation = held_object.rotation_degrees
 				held_object.mode = RigidBody.MODE_KINEMATIC
 				var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 				tween.tween_property(held_object, "translation", hold_position.global_transform.origin, 1.0)	
-		
+				tweening = true
+				tween.connect("finished", self, "not_anymore_tweening")
+				
 	if Input.is_action_just_pressed("crouch"):
 		camera.global_translation.y -= 1
-		ACCEL = 0
+		ACCEL = 0.5
 		is_crouching = true
 	elif Input.is_action_just_released("crouch"):
 		camera.global_translation.y += 1
@@ -158,20 +180,21 @@ func process_movement(delta):
 	vel = move_and_slide(vel, Vector3(0, 1, 0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 func _input(event):
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if held_object:
-			held_object.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
-			held_object.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY))
+	if not tweening:
+		if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			if held_object:
+				held_object.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
+				held_object.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY))
 
-			var object_rot = held_object.rotation_degrees
-			object_rot.x = clamp(object_rot.x, -70, 70)
-			held_object.rotation_degrees = object_rot
-		elif not focus_on_family_tree :
-			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * -1))
-			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
+				var object_rot = held_object.rotation_degrees
+				object_rot.x = clamp(object_rot.x, -70, 70)
+				held_object.rotation_degrees = object_rot
+			elif not focus_on_family_tree :
+				rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * -1))
+				self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
-			var camera_rot = rotation_helper.rotation_degrees
-			camera_rot.x = clamp(camera_rot.x, -70, 70)
-			rotation_helper.rotation_degrees = camera_rot
+				var camera_rot = rotation_helper.rotation_degrees
+				camera_rot.x = clamp(camera_rot.x, -70, 70)
+				rotation_helper.rotation_degrees = camera_rot
 
 		

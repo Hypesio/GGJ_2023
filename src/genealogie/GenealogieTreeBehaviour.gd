@@ -17,8 +17,12 @@ var previous_mouse_position = null
 export var placeholder_path: Array = []
 var placeholder_nodes: Array = []
 var placeholder_picture_in: Array = []
+var is_outline := false
 
 export var mouse_speed = 0.005
+
+var shader: ShaderMaterial
+export var outline_color: Color
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,6 +37,15 @@ func _ready():
 	
 	for i in range(0, len(pictures_body)) : 
 		pictures_body[i].visible = pictures_enable[i]
+	
+	$Background.get_active_material(0).next_pass = $Background.get_active_material(0).next_pass.duplicate()
+	shader = $Background.get_active_material(0).next_pass
+	shader.set_shader_param("thickness", 0)
+	$Background.mesh.material = $Background.mesh.material.duplicate()
+		
+func _process(delta: float) -> void:
+	if is_outline:
+		shader.set_shader_param("thickness", 0.02 + 0.03 * (1 + sin(5 * OS.get_system_time_msecs()/1000.0))/2)
 		
 func is_focus_on(camera) : 
 	if Input.is_mouse_button_pressed(1) : 
@@ -111,3 +124,12 @@ func on_picture_released(picture_id) :
 
 func enable_picture(id) : 
 	pictures_body[id].visible = true
+
+func hover_highlight():
+	shader.set_shader_param("thickness", 0.1)
+	shader.set_shader_param("outline_color", outline_color)
+	is_outline = true
+
+func stop_hover_highlight():
+	shader.set_shader_param("thickness", 0)
+	is_outline = false

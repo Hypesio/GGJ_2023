@@ -14,7 +14,7 @@ func on_object_picked(object: Obj) -> void:
 		photos_picked.append(object.id)
 		print(object.id)
 		familyTree.enable_picture(object.id)
-		object.queue_free()
+		object.collect()
 	outline_object_category(object.group)
 	
 

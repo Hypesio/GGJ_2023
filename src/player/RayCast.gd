@@ -3,9 +3,6 @@ extends RayCast
 var colliding_shape: RigidBody = null
 
 func _physics_process(delta: float) -> void:
-	if is_colliding() && get_collider().is_in_group("FamilyTree") : 
-		return 
-		
 	if colliding_shape and not is_instance_valid(colliding_shape):
 		colliding_shape = null
 	if is_colliding():

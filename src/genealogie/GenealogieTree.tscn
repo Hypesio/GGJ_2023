@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/genealogie/Picture.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/genealogie/GenealogieTreeBehaviour.gd" type="Script" id=2]
 [ext_resource path="res://src/genealogie/PicturePlaceholder.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/genealogie/outline.tres" type="Material" id=4]
+[ext_resource path="res://src/genealogie/RigidBody.gd" type="Script" id=5]
 
 [sub_resource type="CubeMesh" id=1]
+material = ExtResource( 4 )
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.192196, 0.199488, 1 )
@@ -48,6 +51,7 @@ transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, 0, 
 collision_layer = 4
 collision_mask = 7
 mode = 1
+script = ExtResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="RigidBody" groups=["FamilyTree"]]
 transform = Transform( 3, 0, 0, 0, 2, 0, 0, 0, 0.3, 0, 0, 0 )
