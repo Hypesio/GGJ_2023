@@ -1,6 +1,6 @@
 extends RayCast
 
-var colliding_shape: StaticBody = null
+var colliding_shape: RigidBody = null
 
 func _physics_process(delta: float) -> void:
 	if is_colliding():

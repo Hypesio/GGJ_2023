@@ -1,4 +1,4 @@
-extends StaticBody
+extends RigidBody
 class_name Obj
 
 var obj_mesh_material
