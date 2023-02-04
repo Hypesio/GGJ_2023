@@ -4,6 +4,9 @@ class_name Obj
 
 onready var obj_mesh_material: Material
 onready var animation_player := $AnimationPlayer
+onready var sound_stream := get_node_or_null("AudioStreamPlayer3D")
+export var min_pitch = 0.92
+export var max_pitch = 1.07
 var shader: ShaderMaterial
 export var base_outline_color: Color
 export var group_outline_color: Color
@@ -16,13 +19,16 @@ var is_held := false
 export (Utils.ObjectType) var type: int
 export var id: int
 export (Utils.Group) var group: int
+var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
+	rng.randomize()
 	$MeshInstance.get_active_material(0).next_pass = $MeshInstance.get_active_material(0).next_pass.duplicate()
 	shader = $MeshInstance.get_active_material(0).next_pass
 	shader.set_shader_param("thickness", 0)
 	$MeshInstance.mesh.material = $MeshInstance.mesh.material.duplicate()
 	obj_mesh_material = $MeshInstance.mesh.material
+	
 
 func _process(delta: float) -> void:
 	if is_outline or is_group_outline:
@@ -51,6 +57,10 @@ func stop_hover_highlight():
 	is_outline = false
 
 func interact():
+	if (sound_stream != null) : 
+		var pitch = rng.randf_range(min_pitch, max_pitch)
+		sound_stream.pitch_scale = pitch
+		sound_stream.play()
 	print("interacting...")
 
 func collect():

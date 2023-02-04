@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://src/player/RayCast.gd" type="Script" id=2]
 [ext_resource path="res://assets/crosshair.png" type="Texture" id=3]
+[ext_resource path="res://assets/sounds/footstep_1.mp3" type="AudioStream" id=4]
+[ext_resource path="res://src/player/FootSounds.gd" type="Script" id=5]
 
 [sub_resource type="CapsuleMesh" id=2]
 radius = 0.5
@@ -62,3 +64,21 @@ margin_top = -310.0
 margin_right = 310.0
 margin_bottom = 310.0
 texture = ExtResource( 3 )
+
+[node name="FootSounds" type="Spatial" parent="."]
+script = ExtResource( 5 )
+min_pitch = 0.7
+max_pitch = 1.0
+sounds = [ ExtResource( 4 ) ]
+
+[node name="AudioFoot" type="AudioStreamPlayer3D" parent="FootSounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0828711, -0.568791, 0 )
+stream = ExtResource( 4 )
+attenuation_model = 1
+unit_db = -10.0
+
+[node name="AudioFoot2" type="AudioStreamPlayer3D" parent="FootSounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.189068, -0.568791, 0 )
+stream = ExtResource( 4 )
+attenuation_model = 1
+unit_db = -10.0

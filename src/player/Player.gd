@@ -15,6 +15,7 @@ onready var rotation_helper = $Rotation_Helper
 onready var raycast = $Rotation_Helper/Camera/RayCast
 onready var hold_position = $Rotation_Helper/Camera/HoldPosition
 onready var crosshair = $HUD/Crosshair
+onready var footsounds = $FootSounds
 
 var held_object: RigidBody
 var held_object_old_position: Vector3
@@ -28,6 +29,7 @@ var is_crouching := false
 var ACCEL = 4.5
 var family_tree_script = null
 var tweening := false
+var was_walking = false
 
 var MOUSE_SENSITIVITY = 0.05
 
@@ -85,6 +87,16 @@ func process_input(delta):
 			if Input.is_action_just_pressed("movement_jump"):
 				vel.y = JUMP_SPEED
 		# ----------------------------------
+		# ----------------------------------
+		# Foosteps
+		
+		if (is_on_floor() && !is_on_wall() && input_movement_vector.length() > 0.1) : 
+				if (!was_walking) : 
+					delta = 1000
+				footsounds.play_sound(delta)
+				
+		was_walking = input_movement_vector.length() > 0.1
+		# --------------------------------
 	
 	if Input.is_action_just_pressed("interact"):
 		if held_object:
@@ -127,6 +139,7 @@ func process_input(delta):
 				tween.connect("finished", self, "not_anymore_tweening")
 			else :
 				held_object = raycast.get_collider()
+				held_object.interact()
 				held_object.is_held = true
 				held_object.stop_hover_highlight()
 				hold_position.translation.z = -held_object.size

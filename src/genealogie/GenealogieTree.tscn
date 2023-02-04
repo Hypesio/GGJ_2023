@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/genealogie/Picture.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/genealogie/GenealogieTreeBehaviour.gd" type="Script" id=2]
 [ext_resource path="res://src/genealogie/PicturePlaceholder.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/genealogie/outline.tres" type="Material" id=4]
 [ext_resource path="res://src/genealogie/RigidBody.gd" type="Script" id=5]
+[ext_resource path="res://assets/sounds/pin.mp3" type="AudioStream" id=6]
 
 [sub_resource type="CubeMesh" id=1]
 material = ExtResource( 4 )
@@ -18,7 +19,6 @@ extents = Vector3( 0.245875, 0.252006, 0.218596 )
 [node name="GenealogieTree" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0042651, 2.98023e-08, 0.00275898 )
 script = ExtResource( 2 )
-min_distance_to_snap = 1.0
 z_picture_distance_from_wall = -0.014
 goal_order_pictures = [ 0, 1 ]
 pictures_enable = [ true, false ]
@@ -59,6 +59,11 @@ shape = SubResource( 2 )
 
 [node name="CameraFront" type="Spatial" parent="RigidBody"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -1.79513 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 6 )
+unit_db = -6.0
+pitch_scale = 1.1
 
 [editable path="Picture"]
 [editable path="Picture2"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pin.mp3-ec074f239f6114f3a056ebff4323ac78.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/pin.mp3"
+dest_files=[ "res://.import/pin.mp3-ec074f239f6114f3a056ebff4323ac78.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

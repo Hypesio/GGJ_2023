@@ -4,6 +4,7 @@ export var min_distance_to_snap = 0.15
 export var z_picture_distance_from_wall = 0.02
 export var goal_order_pictures: Array = []
 export var pictures_enable = []
+onready var sound_stream: AudioStreamPlayer3D = $AudioStreamPlayer3D 
 
 var picture_selected = null 
 var actual_hovered = null
@@ -58,9 +59,10 @@ func is_focus_on(camera) :
 	var ray_len = 3.0
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * ray_len
-	var hit_info = space_state.intersect_ray(from, to)
+	var hit_info = space_state.intersect_ray(from, to, [], 1 << 4)
 	# Get who is hovered 
-	if (len(hit_info) != 0 && picture_selected == null) : 
+	if (len(hit_info) != 0 && picture_selected == null) :
+		#print(hit_info)
 		if (hit_info.collider.is_in_group("Picture")) : 
 			for i in range(0, len(pictures_kinematic)) : 
 				if pictures_kinematic[i] == hit_info.collider : 
@@ -76,17 +78,18 @@ func is_focus_on(camera) :
 		actual_hovered = null
 	
 		
-
 func on_clicked() : 
-	if (actual_hovered != null) :
+	if (actual_hovered != null && picture_selected == null) :
 		on_picture_selected(actual_hovered)
 
 func on_released() : 
 	if (picture_selected != null) :
 		on_picture_released(picture_selected)
 		picture_selected = null
+	
 
 func on_picture_selected(picture_id):
+	sound_stream.play()
 	picture_selected = picture_id
 	
 	# Picture out of the placeholder
@@ -105,6 +108,7 @@ func check_end() :
 	
 		
 func on_picture_released(picture_id) : 
+	sound_stream.play()
 	var min_distance = -1 
 	var closest_placeholder = 0
 	for i in range(0, len(placeholder_nodes)) :
