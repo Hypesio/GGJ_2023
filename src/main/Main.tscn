@@ -21,31 +21,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47395, 1.10863 )
 [node name="Postcard" parent="Objects" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45899, 0.506267, -2.25637 )
 physics_material_override = SubResource( 1 )
-normal_color = Color( 0.313726, 0.729412, 0.160784, 1 )
-group_highlight_color = Color( 1, 0.796078, 0.00392157, 1 )
 type = 1
 
 [node name="Postcard2" parent="Objects" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50275, 0.506267, -0.900535 )
 physics_material_override = SubResource( 1 )
-normal_color = Color( 0.027451, 0.305882, 0.290196, 1 )
-group_highlight_color = Color( 1, 0.796078, 0.00392157, 1 )
 type = 1
 group = 1
 
 [node name="Photo" parent="Objects" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3077, 0.520437, -3.76642 )
 physics_material_override = SubResource( 1 )
-normal_color = Color( 0.313726, 0.729412, 0.160784, 1 )
 
 [node name="Photo2" parent="Objects" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.335262, 0.520437, -5.99546 )
 physics_material_override = SubResource( 1 )
-normal_color = Color( 0.027451, 0.305882, 0.290196, 1 )
 group = 1
 
 [node name="Photo3" parent="Objects" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.72991, 0.520437, -4.04544 )
 physics_material_override = SubResource( 1 )
-normal_color = Color( 0.72549, 0.160784, 0.729412, 1 )
 group = 2

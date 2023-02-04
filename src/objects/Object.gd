@@ -1,39 +1,50 @@
+tool
 extends RigidBody
 class_name Obj
 
 onready var obj_mesh_material: Material
-export var normal_color: Color
-export var hover_highlight_color: Color
-export var group_highlight_color: Color
+var shader: ShaderMaterial
+export var base_outline_color: Color
+export var group_outline_color: Color
 
-var group_highlight := false
+var is_outline := false
+var is_group_outline := false
 
 export (Utils.ObjectType) var type: int
 export var id: int
 export (Utils.Group) var group: int
 
 func _ready() -> void:
+	$MeshInstance.get_active_material(0).next_pass = $MeshInstance.get_active_material(0).next_pass.duplicate()
+	shader = $MeshInstance.get_active_material(0).next_pass
+	shader.set_shader_param("thickness", 0)
 	$MeshInstance.mesh.material = $MeshInstance.mesh.material.duplicate()
 	obj_mesh_material = $MeshInstance.mesh.material
-	obj_mesh_material.albedo_color = normal_color
 
+func _process(delta: float) -> void:
+	if is_outline or is_group_outline:
+		shader.set_shader_param("thickness", 0.02 + 0.03 * (1 + sin(5 * OS.get_system_time_msecs()/1000.0))/2)
+	
 func group_highlight():
-	group_highlight = true
-	obj_mesh_material.albedo_color = group_highlight_color
+	shader.set_shader_param("thickness", 0.1)
+	shader.set_shader_param("outline_color", group_outline_color)
+	is_group_outline = true
 	
 func stop_group_highlight():
-	if group_highlight:
-		group_highlight = false
-		obj_mesh_material.albedo_color = normal_color
+	shader.set_shader_param("thickness", 0)
+	is_group_outline = false
 	
 func hover_highlight():
-	obj_mesh_material.albedo_color = hover_highlight_color
+	shader.set_shader_param("thickness", 0.1)
+	shader.set_shader_param("outline_color", base_outline_color)
+	is_outline = true
 
 func stop_hover_highlight():
-	if group_highlight:
-		obj_mesh_material.albedo_color = group_highlight_color
+	if is_group_outline:
+		shader.set_shader_param("outline_color", group_outline_color)
 	else:
-		obj_mesh_material.albedo_color = normal_color
+		shader.set_shader_param("thickness", 0)
+	is_outline = false
 
 func interact():
 	print("interacting...")
