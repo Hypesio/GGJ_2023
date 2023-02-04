@@ -3,11 +3,15 @@ extends Spatial
 export var min_distance_to_snap = 0.15
 export var z_picture_distance_from_wall = 0.02
 export var goal_order_pictures: Array = []
+export var pictures_enable = []
 
 var picture_selected = null 
+var actual_hovered = null
 export var pictures_path: Array = [] 
 var pictures_body = []
 var pictures_signal = []
+var pictures_kinematic = []
+
 var previous_mouse_position = null
 
 export var placeholder_path: Array = []
@@ -21,13 +25,55 @@ func _ready():
 	for i in range(0, len(pictures_path)) : 
 		pictures_body.append(get_node(pictures_path[i]))
 		pictures_body[i].connect("on_selected", self, "on_picture_selected", [i])
+		pictures_kinematic.append(pictures_body[i].get_node("PhotoTree/KinematicBody"))
 	
 	for i in range(0, len(placeholder_path)) :
 		placeholder_nodes.append(get_node(placeholder_path[i]))
 		placeholder_picture_in.append(-1)
+	
+	for i in range(0, len(pictures_body)) : 
+		pictures_body[i].visible = pictures_enable[i]
+		
+func is_focus_on(camera) : 
+	if Input.is_mouse_button_pressed(1) : 
+		on_clicked()
+	else :
+		on_released()
+	
+	var space_state = get_world().direct_space_state
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_len = 3.0
+	var from = camera.project_ray_origin(mouse_pos)
+	var to = from + camera.project_ray_normal(mouse_pos) * ray_len
+	var hit_info = space_state.intersect_ray(from, to)
+	# Get who is hovered 
+	if (len(hit_info) != 0 && picture_selected == null) : 
+		if (hit_info.collider.is_in_group("Picture")) : 
+			for i in range(0, len(pictures_kinematic)) : 
+				if pictures_kinematic[i] == hit_info.collider : 
+					actual_hovered = i
+					break;
+		else :
+			actual_hovered = null
+	# Move
+	elif (len(hit_info) != 0 && picture_selected != null) :
+		pictures_body[picture_selected].global_translation = hit_info.position
+		pictures_body[picture_selected].translation.z = z_picture_distance_from_wall
+	else : 
+		actual_hovered = null
+	
 		
 
-func on_picture_selected(_event, picture_id):
+func on_clicked() : 
+	if (actual_hovered != null) :
+		on_picture_selected(actual_hovered)
+
+func on_released() : 
+	if (picture_selected != null) :
+		on_picture_released(picture_selected)
+		picture_selected = null
+
+func on_picture_selected(picture_id):
 	picture_selected = picture_id
 	
 	# Picture out of the placeholder
@@ -45,7 +91,6 @@ func check_end() :
 		print("The Tree is completed !")
 	
 		
-
 func on_picture_released(picture_id) : 
 	var min_distance = -1 
 	var closest_placeholder = 0
@@ -58,20 +103,11 @@ func on_picture_released(picture_id) :
 	# Snap on placeholder only if the place is free
 	if (min_distance < min_distance_to_snap && placeholder_picture_in[closest_placeholder] == -1) :
 		print("Snap picture ", picture_id, " on ", closest_placeholder)
-		pictures_body[picture_id].translation = placeholder_nodes[closest_placeholder].translation
-		pictures_body[picture_id].translation.z -= z_picture_distance_from_wall
+		pictures_body[picture_id].global_translation = placeholder_nodes[closest_placeholder].global_translation
+		pictures_body[picture_id].translation.z = z_picture_distance_from_wall
 		placeholder_picture_in[closest_placeholder] = picture_id
 		
 		check_end()
 
-func _process(_delta):
-	var click_position = get_viewport().get_mouse_position()
-	if picture_selected != null && Input.is_mouse_button_pressed(1): # Left click
-		if (previous_mouse_position != null) :
-			var direction_move = previous_mouse_position - click_position 
-			pictures_body[picture_selected].translation += Vector3(direction_move.x, direction_move.y, 0) * mouse_speed
-	elif picture_selected != null :
-		on_picture_released(picture_selected)
-		picture_selected = null
-		
-	previous_mouse_position = click_position
+func enable_picture(id) : 
+	pictures_body[id].visible = true

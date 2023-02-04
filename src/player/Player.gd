@@ -25,6 +25,7 @@ var original_camera_rotation: Vector3
 var collider_family_tree
 var is_crouching := false
 var ACCEL = 4.5
+var family_tree_script = null
 
 var MOUSE_SENSITIVITY = 0.05
 
@@ -32,13 +33,19 @@ signal object_picked (Obj)
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
 
 func _physics_process(delta):
 	process_input(delta)
 	process_movement(delta)
+	
+func on_family_tree() :
+	family_tree_script.is_focus_on(camera)
 
 func process_input(delta):
-
+	if focus_on_family_tree : 
+		on_family_tree()
+		
 	if held_object || focus_on_family_tree:
 		pass
 		
@@ -90,10 +97,10 @@ func process_input(delta):
 		elif raycast.is_colliding():
 			if (raycast.get_collider().is_in_group("FamilyTree")) :
 				collider_family_tree = raycast.get_collider().get_child(0)
-				print(collider_family_tree)
 				collider_family_tree.disabled = true
+				family_tree_script = raycast.get_collider().get_node("../../GenealogieTree")
 				focus_on_family_tree = true
-				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				# Force camera position
 				var camera_pos = raycast.get_collider().get_child(1)
 				original_camera_pos = camera.global_translation
@@ -166,3 +173,5 @@ func _input(event):
 			var camera_rot = rotation_helper.rotation_degrees
 			camera_rot.x = clamp(camera_rot.x, -70, 70)
 			rotation_helper.rotation_degrees = camera_rot
+
+		

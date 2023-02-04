@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/genealogie/Picture.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/genealogie/GenealogieTreeBehaviour.gd" type="Script" id=2]
@@ -6,18 +6,31 @@
 
 [sub_resource type="CubeMesh" id=1]
 
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.192196, 0.199488, 1 )
+
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.245875, 0.252006, 0.218596 )
 
 [node name="GenealogieTree" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0042651, 2.98023e-08, 0.00275898 )
 script = ExtResource( 2 )
+min_distance_to_snap = 1.0
+z_picture_distance_from_wall = -0.014
 goal_order_pictures = [ 0, 1 ]
+pictures_enable = [ true, false ]
 pictures_path = [ NodePath("Picture"), NodePath("Picture2") ]
 placeholder_path = [ NodePath("Placeholder"), NodePath("Placeholder2") ]
 
 [node name="Background" type="MeshInstance" parent="."]
 transform = Transform( -2.18557e-08, -0.8, 0, 0.5, -3.49691e-08, 0, 0, 0, 0.01, 0, 0, 0 )
 mesh = SubResource( 1 )
+
+[node name="KinematicBody" type="KinematicBody" parent="Background"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Background/KinematicBody"]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 3 )
 
 [node name="Picture" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.177315, 0.24, -0.014 )

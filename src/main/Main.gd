@@ -2,6 +2,7 @@ extends Spatial
 
 onready var player = $Player
 onready var objects = $Objects
+onready var familyTree = $GenealogieTree
 
 var photos_picked = []
 
@@ -11,8 +12,11 @@ func _ready() -> void:
 func on_object_picked(object: Obj) -> void:
 	if object.type == Utils.ObjectType.PHOTO:
 		photos_picked.append(object.id)
+		print(object.id)
+		familyTree.enable_picture(object.id)
 		object.queue_free()
 	outline_object_category(object.group)
+	
 
 func outline_object_category(group: int) -> void:
 	for object in objects.get_children():
