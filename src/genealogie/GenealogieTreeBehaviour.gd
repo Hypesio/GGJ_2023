@@ -1,6 +1,6 @@
 extends Spatial
 
-export var min_distance_to_snap = 1.0
+export var min_distance_to_snap = 0.15
 export var z_picture_distance_from_wall = 0.02
 export var goal_order_pictures: Array = []
 
@@ -63,8 +63,6 @@ func on_picture_released(picture_id) :
 		placeholder_picture_in[closest_placeholder] = picture_id
 		
 		check_end()
-		
-	
 
 func _process(_delta):
 	var click_position = get_viewport().get_mouse_position()
@@ -77,5 +75,3 @@ func _process(_delta):
 		picture_selected = null
 		
 	previous_mouse_position = click_position
-
-

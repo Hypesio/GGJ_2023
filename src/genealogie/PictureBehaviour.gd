@@ -11,6 +11,7 @@ func _ready():
 
 # Call on click
 func on_input_event(_camera, event, _click_position, _click_normal, _shape_idx):
+	print("Hovering me")
 	if event.is_pressed()  :
 		emit_signal("on_selected", event)
 

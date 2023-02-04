@@ -20,6 +20,11 @@ var held_object: RigidBody
 var held_object_old_position: Vector3
 var held_object_old_rotation: Vector3
 
+var focus_on_family_tree = false
+var original_camera_pos: Vector3
+var original_camera_rotation: Vector3
+var collider_family_tree
+
 var MOUSE_SENSITIVITY = 0.05
 
 signal object_picked (Obj)
@@ -33,7 +38,7 @@ func _physics_process(delta):
 
 func process_input(delta):
 
-	if held_object:
+	if held_object || focus_on_family_tree:
 		pass
 		
 	else:
@@ -74,12 +79,32 @@ func process_input(delta):
 			held_object.global_transform.origin = held_object_old_position
 			held_object.rotation_degrees = held_object_old_rotation
 			held_object = null
+		elif focus_on_family_tree : 
+			focus_on_family_tree = false
+			camera.global_translation = original_camera_pos
+			camera.global_rotation = original_camera_rotation
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			collider_family_tree.disabled = false
 		elif raycast.is_colliding():
-			held_object = raycast.get_collider()
-			held_object_old_position = held_object.global_transform.origin
-			held_object_old_rotation = held_object.rotation_degrees
-			held_object.mode = RigidBody.MODE_KINEMATIC
-			held_object.global_transform.origin = hold_position.global_transform.origin		
+			if (raycast.get_collider().is_in_group("FamilyTree")) :
+				collider_family_tree = raycast.get_collider().get_child(0)
+				print(collider_family_tree)
+				collider_family_tree.disabled = true
+				focus_on_family_tree = true
+				Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+				# Force camera position
+				var camera_pos = raycast.get_collider().get_child(1)
+				original_camera_pos = camera.global_translation
+				original_camera_rotation = camera.global_rotation
+				camera.global_translation = camera_pos.global_translation
+				camera.global_rotation = camera_pos.global_rotation
+			else :
+				held_object = raycast.get_collider()
+				held_object_old_position = held_object.global_transform.origin
+				held_object_old_rotation = held_object.rotation_degrees
+				held_object.mode = RigidBody.MODE_KINEMATIC
+				held_object.global_transform.origin = hold_position.global_transform.origin		
+		
 		
 	# ----------------------------------
 	# Capturing/Freeing the cursor
@@ -122,7 +147,7 @@ func _input(event):
 			var object_rot = held_object.rotation_degrees
 			object_rot.x = clamp(object_rot.x, -70, 70)
 			held_object.rotation_degrees = object_rot
-		else:
+		elif not focus_on_family_tree :
 			rotation_helper.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY * -1))
 			self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 
