@@ -6,6 +6,7 @@ onready var obj_mesh_material: Material
 var shader: ShaderMaterial
 export var base_outline_color: Color
 export var group_outline_color: Color
+export var size: float
 
 var is_outline := false
 var is_group_outline := false

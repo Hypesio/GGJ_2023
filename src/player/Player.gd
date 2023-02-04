@@ -4,7 +4,6 @@ const GRAVITY = -24.8
 var vel = Vector3()
 const MAX_SPEED = 20
 const JUMP_SPEED = 18
-const ACCEL = 4.5
 
 var dir = Vector3()
 
@@ -24,6 +23,8 @@ var focus_on_family_tree = false
 var original_camera_pos: Vector3
 var original_camera_rotation: Vector3
 var collider_family_tree
+var is_crouching := false
+var ACCEL = 4.5
 
 var MOUSE_SENSITIVITY = 0.05
 
@@ -76,8 +77,9 @@ func process_input(delta):
 		if held_object:
 			emit_signal("object_picked", held_object)
 			held_object.mode = RigidBody.MODE_RIGID
-			held_object.global_transform.origin = held_object_old_position
-			held_object.rotation_degrees = held_object_old_rotation
+			var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+			tween.tween_property(held_object, "translation", held_object_old_position, 1.0)
+			tween.parallel().tween_property(held_object, "rotation_degrees", held_object_old_rotation, 1.0)
 			held_object = null
 		elif focus_on_family_tree : 
 			focus_on_family_tree = false
@@ -100,11 +102,21 @@ func process_input(delta):
 				camera.global_rotation = camera_pos.global_rotation
 			else :
 				held_object = raycast.get_collider()
+				hold_position.translation.z = -held_object.size
 				held_object_old_position = held_object.global_transform.origin
 				held_object_old_rotation = held_object.rotation_degrees
 				held_object.mode = RigidBody.MODE_KINEMATIC
-				held_object.global_transform.origin = hold_position.global_transform.origin		
+				var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+				tween.tween_property(held_object, "translation", hold_position.global_transform.origin, 1.0)	
 		
+	if Input.is_action_just_pressed("crouch"):
+		camera.global_translation.y -= 1
+		ACCEL = 0
+		is_crouching = true
+	elif Input.is_action_just_released("crouch"):
+		camera.global_translation.y += 1
+		ACCEL = 4.5
+		is_crouching = false
 		
 	# ----------------------------------
 	# Capturing/Freeing the cursor

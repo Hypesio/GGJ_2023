@@ -7,7 +7,7 @@
 resource_local_to_scene = true
 
 [sub_resource type="BoxShape" id=3]
-extents = Vector3( 0.5, 0.5, 0.5 )
+extents = Vector3( 0.15, 0.15, 0.15 )
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = ExtResource( 2 )
@@ -20,7 +20,7 @@ next_pass = SubResource( 9 )
 [sub_resource type="CubeMesh" id=6]
 resource_local_to_scene = true
 material = SubResource( 8 )
-size = Vector3( 1, 1, 1 )
+size = Vector3( 0.3, 0.3, 0.3 )
 
 [node name="Object" type="RigidBody"]
 collision_layer = 4
@@ -28,7 +28,7 @@ collision_mask = 3
 physics_material_override = SubResource( 4 )
 script = ExtResource( 1 )
 group_outline_color = Color( 0.741176, 0.572549, 0.12549, 1 )
-size = 2.0
+size = 1.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )
