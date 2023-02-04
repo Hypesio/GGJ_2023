@@ -1,25 +1,30 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/objects/Object.gd" type="Script" id=1]
 
-[sub_resource type="SpatialMaterial" id=2]
-
-[sub_resource type="CubeMesh" id=1]
-material = SubResource( 2 )
-size = Vector3( 1, 1, 1 )
+[sub_resource type="PhysicsMaterial" id=4]
+resource_local_to_scene = true
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[node name="Object" type="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.498613, 0 )
-mesh = SubResource( 1 )
+[sub_resource type="SpatialMaterial" id=5]
 
-[node name="RigidBody" type="RigidBody" parent="."]
+[sub_resource type="CubeMesh" id=6]
+resource_local_to_scene = true
+material = SubResource( 5 )
+size = Vector3( 1, 1, 1 )
+
+[node name="Object" type="RigidBody"]
 collision_layer = 4
-collision_mask = 0
+collision_mask = 3
+physics_material_override = SubResource( 4 )
 script = ExtResource( 1 )
-normal_color = Color( 1, 0, 0, 1 )
+normal_color = Color( 1, 1, 1, 1 )
+group_highlight_color = Color( 0.882353, 0.74902, 0.231373, 1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+[node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 6 )
