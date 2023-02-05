@@ -9,7 +9,9 @@ onready var transition_rect = $SceneTransitionRect
 var photos_picked = []
 
 func _ready() -> void:
-	#transition_rect.fade_in()
+	transition_rect.visible = true
+	transition_rect.modulate.a = 1
+	transition_rect.fade_in()
 	menu.visible = false
 	player.connect("object_picked", self, "on_object_picked")
 	player.connect("pause", self, "on_pause")
