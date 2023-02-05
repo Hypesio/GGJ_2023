@@ -82,18 +82,15 @@ texture = ExtResource( 3 )
 
 [node name="FootSounds" type="Spatial" parent="."]
 script = ExtResource( 5 )
-min_pitch = 0.7
-max_pitch = 1.0
+time_between_noise = 0.7
+min_pitch = 0.9
+max_pitch = 1.3
 sounds = [ ExtResource( 4 ) ]
 
 [node name="AudioFoot" type="AudioStreamPlayer3D" parent="FootSounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0828711, -0.568791, 0 )
 stream = ExtResource( 4 )
-attenuation_model = 1
-unit_db = -20.0
+unit_db = -10.0
 
 [node name="AudioFoot2" type="AudioStreamPlayer3D" parent="FootSounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.189068, -0.568791, 0 )
 stream = ExtResource( 4 )
-attenuation_model = 1
 unit_db = -10.0

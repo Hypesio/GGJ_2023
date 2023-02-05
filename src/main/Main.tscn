@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/building/Floor.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://src/building/Kitchen.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/main/Menu.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/main/SceneTransitionRect.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/sounds/footstep_1.mp3" type="AudioStream" id=11]
+[ext_resource path="res://assets/sounds/door_wooden.wav" type="AudioStream" id=13]
 
 [sub_resource type="PhysicsMaterial" id=1]
 resource_local_to_scene = true
@@ -20,6 +22,10 @@ resource_local_to_scene = true
 [node name="Main" type="Spatial"]
 pause_mode = 2
 script = ExtResource( 4 )
+time_between_steps = 0.65
+durationSteps = 3.5
+min_pitch = 0.7
+max_pitch = 0.9
 
 [node name="GenealogieTree" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.111556, 0, 0.993758, 0, 1, 0, -0.993758, 0, 0.111556, 3.67763, 1.72197, 1.26734 )
@@ -56,3 +62,16 @@ type = 1
 [node name="SceneTransitionRect" parent="." instance=ExtResource( 10 )]
 visible = false
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -5.233
+
+[node name="AudioStreamPlayerFoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -10.154
+
+[node name="AudioStreamPlayerFoot2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -10.466
+pitch_scale = 0.92
