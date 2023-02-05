@@ -30,6 +30,7 @@ transform = Transform( -2.18557e-08, -0.8, 0, 0.5, -3.49691e-08, 0, 0, 0, 0.01, 
 mesh = SubResource( 1 )
 
 [node name="KinematicBody" type="KinematicBody" parent="Background"]
+collision_layer = 16
 
 [node name="CollisionShape" type="CollisionShape" parent="Background/KinematicBody"]
 transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )

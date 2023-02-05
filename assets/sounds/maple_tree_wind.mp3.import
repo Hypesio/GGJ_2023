@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/maple_tree_wind.mp3-46dda5fae7569d52f712b9206de5a845.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/maple_tree_wind.mp3"
+dest_files=[ "res://.import/maple_tree_wind.mp3-46dda5fae7569d52f712b9206de5a845.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -23,11 +23,14 @@ var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	rng.randomize()
-	$MeshInstance.get_active_material(0).next_pass = $MeshInstance.get_active_material(0).next_pass.duplicate()
-	shader = $MeshInstance.get_active_material(0).next_pass
+	var mesh = $MeshInstance
+	if get_node_or_null("MeshInstance2") != null : 
+		mesh = get_node("MeshInstance2")
+	mesh.get_active_material(0).next_pass = mesh.get_active_material(0).next_pass.duplicate()
+	shader = mesh.get_active_material(0).next_pass
 	shader.set_shader_param("thickness", 0)
-	$MeshInstance.mesh.material = $MeshInstance.mesh.material.duplicate()
-	obj_mesh_material = $MeshInstance.mesh.material
+	#mesh.mesh.material = mesh.mesh.material.duplicate()
+	#obj_mesh_material = mesh.mesh.material
 	
 
 func _process(delta: float) -> void:
