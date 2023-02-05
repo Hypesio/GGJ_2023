@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/genealogie/Picture.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/genealogie/GenealogieTreeBehaviour.gd" type="Script" id=2]
@@ -6,12 +6,42 @@
 [ext_resource path="res://src/genealogie/outline.tres" type="Material" id=4]
 [ext_resource path="res://src/genealogie/RigidBody.gd" type="Script" id=5]
 [ext_resource path="res://assets/sounds/pin.mp3" type="AudioStream" id=6]
+[ext_resource path="res://assets/glb/rameaux.png" type="Texture" id=7]
+[ext_resource path="res://assets/glb/eglantine.png" type="Texture" id=8]
+[ext_resource path="res://assets/glb/olivier.png" type="Texture" id=9]
+[ext_resource path="res://assets/glb/silvia.png" type="Texture" id=10]
+[ext_resource path="res://src/objects/outline.tres" type="Shader" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 material = ExtResource( 4 )
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.192196, 0.199488, 1 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 11 )
+shader_param/thickness = 0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+next_pass = SubResource( 4 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 10 )
+
+[sub_resource type="SpatialMaterial" id=6]
+next_pass = SubResource( 4 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 9 )
+
+[sub_resource type="SpatialMaterial" id=7]
+next_pass = SubResource( 4 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 8 )
+
+[sub_resource type="SpatialMaterial" id=8]
+next_pass = SubResource( 4 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 7 )
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.245875, 0.252006, 0.218596 )
@@ -20,13 +50,14 @@ extents = Vector3( 0.245875, 0.252006, 0.218596 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0042651, 2.98023e-08, 0.00275898 )
 script = ExtResource( 2 )
 z_picture_distance_from_wall = -0.014
-goal_order_pictures = [ 0, 1 ]
-pictures_enable = [ true, false ]
-pictures_path = [ NodePath("Picture"), NodePath("Picture2") ]
-placeholder_path = [ NodePath("Placeholder"), NodePath("Placeholder2") ]
+goal_order_pictures = [ 0, 1, 2, 3, 4 ]
+pictures_enable = [ true, false, false, false, false ]
+pictures_path = [ NodePath("Picture"), NodePath("Picture2"), NodePath("Picture3"), NodePath("Picture4"), NodePath("Picture5") ]
+placeholder_path = [ NodePath("Placeholder5"), NodePath("Placeholder3"), NodePath("Placeholder4"), NodePath("Placeholder"), NodePath("Placeholder2") ]
+outline_color = Color( 0.219608, 0.905882, 0.164706, 1 )
 
 [node name="Background" type="MeshInstance" parent="."]
-transform = Transform( -2.18557e-08, -0.8, 0, 0.5, -3.49691e-08, 0, 0, 0, 0.01, 0, 0, 0 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.01, 0, 2.30926e-14, 0 )
 mesh = SubResource( 1 )
 
 [node name="KinematicBody" type="KinematicBody" parent="Background"]
@@ -37,18 +68,54 @@ transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 3 )
 
 [node name="Picture" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.177315, 0.24, -0.014 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.235954, -0.327023, -0.014 )
 
 [node name="Picture2" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.239, -0.014 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.354353, -0.09179, -0.014 )
+
+[node name="Cube" parent="Picture2/PhotoTree" index="1"]
+material/0 = SubResource( 5 )
+
+[node name="Picture3" parent="." instance=ExtResource( 1 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.389077, 0.141075, -0.014 )
+
+[node name="Cube" parent="Picture3/PhotoTree" index="1"]
+material/0 = SubResource( 6 )
+
+[node name="Picture4" parent="." instance=ExtResource( 1 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.184701, 0.227824, -0.014 )
+
+[node name="Cube" parent="Picture4/PhotoTree" index="1"]
+material/0 = SubResource( 7 )
+
+[node name="Picture5" parent="." instance=ExtResource( 1 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.338955, 0.391063, -0.014 )
+
+[node name="Cube" parent="Picture5/PhotoTree" index="1"]
+material/0 = SubResource( 8 )
 
 [node name="Placeholder" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, 0.279431, 0.194476, -0.0137287 )
+transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, 0.278683, 0.292177, -0.0140456 )
+visible = false
 
 [node name="Placeholder2" parent="." instance=ExtResource( 3 )]
-transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, 0, 0, -0.014 )
+transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, 0.00904965, 0.290118, -0.014 )
+visible = false
+
+[node name="Placeholder3" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, 0.156002, -0.0436897, -0.014 )
+visible = false
+
+[node name="Placeholder4" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, -0.138506, -0.037886, -0.014 )
+visible = false
+
+[node name="Placeholder5" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.1, 0, -1.50996e-07, 0, 0.1, 0, 1.50996e-08, 0, -1, -0.0103483, -0.352407, -0.014 )
+visible = false
 
 [node name="RigidBody" type="RigidBody" parent="." groups=["FamilyTree"]]
+transform = Transform( 0.683414, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 collision_layer = 4
 collision_mask = 7
 mode = 1
@@ -59,7 +126,7 @@ transform = Transform( 3, 0, 0, 0, 2, 0, 0, 0, 0.3, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="CameraFront" type="Spatial" parent="RigidBody"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -1.79513 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.912068 )
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 6 )
@@ -68,3 +135,6 @@ pitch_scale = 1.1
 
 [editable path="Picture"]
 [editable path="Picture2"]
+[editable path="Picture3"]
+[editable path="Picture4"]
+[editable path="Picture5"]

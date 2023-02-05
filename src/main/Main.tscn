@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/building/Floor.tscn" type="PackedScene" id=2]
@@ -28,12 +28,58 @@
 [ext_resource path="res://assets/items/Deck.tscn" type="PackedScene" id=26]
 [ext_resource path="res://assets/items/Lettre.tscn" type="PackedScene" id=27]
 [ext_resource path="res://assets/items/LivreOuvert.tscn" type="PackedScene" id=28]
+[ext_resource path="res://src/objects/obj_picture.tscn" type="PackedScene" id=29]
+[ext_resource path="res://assets/glb/rameaux.png" type="Texture" id=30]
+[ext_resource path="res://assets/glb/eglantine.png" type="Texture" id=31]
+[ext_resource path="res://assets/glb/olivier.png" type="Texture" id=32]
+[ext_resource path="res://assets/glb/silvia.png" type="Texture" id=33]
+[ext_resource path="res://src/objects/outline.tres" type="Shader" id=34]
 
 [sub_resource type="PhysicsMaterial" id=1]
 resource_local_to_scene = true
 
 [sub_resource type="PhysicsMaterial" id=2]
 resource_local_to_scene = true
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 34 )
+shader_param/thickness = 0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+next_pass = SubResource( 8 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 32 )
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 34 )
+shader_param/thickness = 0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=7]
+next_pass = SubResource( 9 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 33 )
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = ExtResource( 34 )
+shader_param/thickness = 0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+next_pass = SubResource( 10 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 30 )
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = ExtResource( 34 )
+shader_param/thickness = 0
+shader_param/outline_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+next_pass = SubResource( 11 )
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 31 )
 
 [node name="Main" type="Spatial"]
 pause_mode = 2
@@ -44,12 +90,14 @@ min_pitch = 0.7
 max_pitch = 0.9
 
 [node name="GenealogieTree" parent="." instance=ExtResource( 6 )]
-transform = Transform( 0.472751, 0, 0.881196, 0, 1, 0, -0.881196, 0, 0.472751, 4.34201, 1.72197, 2.18682 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.196189, 1.7104, 2.18484 )
 
 [node name="Floor" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00123906, -0.00491369, 0.00576669 )
+visible = false
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.962786, 0, 0.270264, 0, 1, 0, -0.270264, 0, -0.962786, 3.63166, 1.47755, -0.204388 )
+transform = Transform( 0.555062, 0, 0.831809, 0, 1, 0, -0.831809, 0, 0.555062, 3.63166, 1.07912, 1.6064 )
 
 [node name="Objects" type="Spatial" parent="."]
 
@@ -79,47 +127,47 @@ group_outline_color = Color( 0, 1, 0.858824, 1 )
 type = 1
 
 [node name="Loupe" parent="Objects" instance=ExtResource( 14 )]
-transform = Transform( 0.7, 0, 0, 0, -3.0598e-08, 0.7, 0, -0.7, -3.0598e-08, 1.18275, 0.958732, -0.907331 )
+transform = Transform( 0.259808, -0.15, -6.55671e-09, 0, -1.31134e-08, 0.3, -0.15, -0.259808, -1.13566e-08, 0.0981975, 0.929843, -0.485985 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Trophe" parent="Objects" instance=ExtResource( 15 )]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.372249, 1.51836, -0.720783 )
+transform = Transform( -0.157617, 0, -0.123113, 0, 0.2, 0, 0.123113, 0, -0.157617, -2.65894, 1.99487, -3.75122 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Diplome" parent="Objects" instance=ExtResource( 16 )]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0179565, 1.77082, 0.0178839 )
+transform = Transform( -0.06252, 0, 0.189977, 0, 0.2, 0, -0.189977, 0, -0.06252, -4.68742, 2.24969, 1.69849 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Louche" parent="Objects" instance=ExtResource( 17 )]
-transform = Transform( 0.0397388, 0, 0.0917651, 0, 0.1, 0, -0.0917651, 0, 0.0397388, 0.794685, 1.04728, -0.0185935 )
+transform = Transform( 0.0391572, 0.0174252, 0.0632448, -0.00605024, 0.0984656, -0.0114578, -0.0918156, 0.000942996, 0.0277275, -2.3939, 1.83442, 3.94134 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Medaille" parent="Objects" instance=ExtResource( 18 )]
-transform = Transform( 0.0556577, 5.63657e-05, -0.0830796, -0.000235569, 0.0999997, -8.99709e-05, 0.0830793, 0.000245785, 0.0556576, 0.818092, 1.46981, 2.03427 )
+transform = Transform( 0.184809, -0.0764542, 0.000541767, -0.00149158, -0.00218841, 0.199982, -0.0764415, -0.184797, -0.00259238, -2.18212, 1.45709, -3.8264 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="PotHerbe" parent="Objects" instance=ExtResource( 19 )]
-transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.371577, 1.91691 )
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 1.45587, 0.371577, -4.03393 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Serpe" parent="Objects" instance=ExtResource( 20 )]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.02221, 1.02125, 2.53319 )
+transform = Transform( 0.0489008, -0.065592, -0.1825, 0.0169765, 0.188938, -0.063357, 0.193185, 0, 0.0517638, 1.23781, 0.429131, 4.35036 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Tasse" parent="Objects" instance=ExtResource( 21 )]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.847675, 1.02555, -0.484157 )
+transform = Transform( -0.0999111, 0, -0.00421546, 0, 0.1, 0, 0.00421546, 0, -0.0999111, 0.45478, 1.49158, 4.49733 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Ticket" parent="Objects" instance=ExtResource( 22 )]
-transform = Transform( 0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 1.40037, 0.980639, -0.237136 )
+transform = Transform( 0.02127, 0, 0.0452503, 0, 0.05, 0, -0.0452503, 0, 0.02127, -1.91844, 1.37909, 2.41898 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 size = 0.4
@@ -130,41 +178,74 @@ base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="SacRando" parent="Objects" instance=ExtResource( 24 )]
-transform = Transform( -0.0776457, 0, 0.289778, 0, 0.3, 0, -0.289778, 0, -0.0776457, -1.34425, 0.598272, 1.82724 )
+transform = Transform( -0.297501, 0, 0.0386387, 0, 0.3, 0, -0.0386387, 0, -0.297501, 0.120985, 0.268709, -2.07502 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="CartePostale" parent="Objects" instance=ExtResource( 25 )]
-transform = Transform( -0.0082584, 0.149771, -0.000547219, 0.149444, 0.00827651, 0.00990246, 0.00991756, 0, -0.149672, 0.639858, 2.08465, 2.52763 )
+transform = Transform( 0.000677177, -0.0390852, 0.144817, 0.149772, 0.00813569, 0.00149543, -0.00824422, 0.14459, 0.0390624, 0.852131, 2.08465, -3.62475 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Deck" parent="Objects" instance=ExtResource( 26 )]
-transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 1.63557, 0.950885, -0.620995 )
+transform = Transform( -0.103097, 0, -0.0614092, 0, 0.12, 0, 0.0614092, 0, -0.103097, 1.74187, 0.950885, -1.04496 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 size = 0.5
 
 [node name="Lettre" parent="Objects" instance=ExtResource( 27 )]
-transform = Transform( 0.15, 0, 0, 0, -0.149856, -0.00658213, 0, 0.00658213, -0.149856, 0.760816, 0.94344, -1.39744 )
+transform = Transform( 0.0602178, 0.00602844, -0.13725, 0, -0.149856, -0.00658213, -0.137382, 0.00264241, -0.0601598, -2.3726, 1.02173, -3.62063 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Herbier" parent="Objects" instance=ExtResource( 28 )]
-transform = Transform( 0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 1.0213, -1.33554 )
+transform = Transform( 0.259808, 0, -0.15, -0.0217519, 0.296829, -0.0376753, 0.148414, 0.0435037, 0.257061, -2.79264, 0.499327, -0.479644 )
 base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
 group_outline_color = Color( 0, 1, 0.858824, 1 )
 size = 0.6
 
+[node name="PictureObject" parent="Objects" groups=["Olivier"] instance=ExtResource( 29 )]
+transform = Transform( -0.052492, -0.19297, -0.00267633, 3.5901e-05, -0.00278333, 0.199981, -0.192989, 0.0524864, 0.000765151, -0.204633, 0.937443, -1.49545 )
+id = 2
+
+[node name="MeshInstance" parent="Objects/PictureObject" index="1"]
+transform = Transform( 1, 0, -1.86265e-09, -1.19209e-07, 1, 1.04774e-09, 2.32831e-10, -1.16415e-10, 1, 0, 0, 0 )
+material/0 = SubResource( 3 )
+
+[node name="PictureObject2" parent="Objects" groups=["Silvia"] instance=ExtResource( 29 )]
+transform = Transform( -0.199983, 0.00259415, 0.000132836, 9.6526e-05, -0.00279899, 0.19998, 0.00259575, 0.199964, 0.0027975, -1.23663, 0.614294, -4.13815 )
+id = 1
+
+[node name="MeshInstance" parent="Objects/PictureObject2" index="1"]
+material/0 = SubResource( 7 )
+
+[node name="PictureObject3" parent="Objects" groups=["Rameaux"] instance=ExtResource( 29 )]
+transform = Transform( 0.199336, 0.0162785, 0.000190896, 3.59231e-05, -0.00278504, 0.199981, 0.0162796, -0.199317, -0.00277872, 0.00276804, 0.763381, 4.47408 )
+id = 4
+
+[node name="MeshInstance" parent="Objects/PictureObject3" index="1"]
+material/0 = SubResource( 5 )
+
+[node name="PictureObject4" parent="Objects" groups=["Eglantine"] instance=ExtResource( 29 )]
+transform = Transform( -0.185031, 0.0759095, 0.00108972, 3.5901e-05, -0.00278333, 0.199981, 0.0759173, 0.185014, 0.00256139, -1.35215, 1.38784, 2.37619 )
+id = 3
+
+[node name="MeshInstance" parent="Objects/PictureObject4" index="1"]
+transform = Transform( -0.928607, -0.370635, -0.0178638, 0.37048, -0.928772, 0.0114172, -0.0208231, 0.00398389, 0.999776, 0, 0, 0 )
+material/0 = SubResource( 6 )
+
 [node name="StaticBody" parent="." instance=ExtResource( 8 )]
+visible = false
 
 [node name="Tronc" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [node name="Menu" parent="." instance=ExtResource( 9 )]
 
 [node name="SceneTransitionRect" parent="." instance=ExtResource( 10 )]
 visible = false
 mouse_filter = 2
+next_scene_path = "res://src/main/EndScreen.tscn"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )
@@ -180,3 +261,8 @@ volume_db = -10.466
 pitch_scale = 0.92
 
 [node name="Batiment" parent="." instance=ExtResource( 12 )]
+
+[editable path="Objects/PictureObject"]
+[editable path="Objects/PictureObject2"]
+[editable path="Objects/PictureObject3"]
+[editable path="Objects/PictureObject4"]

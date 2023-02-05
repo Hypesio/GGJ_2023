@@ -61,7 +61,6 @@ mode = 1
 physics_material_override = SubResource( 4 )
 script = ExtResource( 1 )
 group_outline_color = Color( 0.741176, 0.572549, 0.12549, 1 )
-size = 2.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )

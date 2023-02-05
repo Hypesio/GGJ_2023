@@ -17,6 +17,9 @@ func transition_to_main() -> void:
 	
 func end_game() -> void: 
 	anim_player.play("fade_out")
+	yield(anim_player, "animation_finished")
+	# Changes the scene
+	get_tree().change_scene(next_scene_path)
 	# Thanks for playing 
 	# Made for Global Game Jam 2023 in Nantes
 	

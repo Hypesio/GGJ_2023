@@ -6,7 +6,7 @@ var is_selected = false
 var previous_mouse_position = null
 
 func _ready():
-	var body = $PhotoTree/KinematicBody
+	var body = get_node("PhotoTree/KinematicBody")
 	body.connect("input_event", self, "on_input_event")
 
 # Call on click

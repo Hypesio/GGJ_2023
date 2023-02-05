@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/glb/Bronze.material" type="Material" id=1]
 
 [sub_resource type="BoxShape" id=14]
 extents = Vector3( 0.437574, 0.535126, 0.398997 )
@@ -12,6 +14,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194711,
 "index_count": 2580,
+"material": ExtResource( 1 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 624
