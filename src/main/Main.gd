@@ -62,25 +62,28 @@ func on_object_picked(object: Obj) -> void:
 		print(object.id)
 		familyTree.enable_picture(object.id)
 		object.collect()
-	outline_object_category(object.group)
-#	outline_object_category(object.get_groups()) 
+#	outline_object_category(object.group)
+	outline_object_category(object.get_groups()) 
 	
 
-func outline_object_category(group: int) -> void:
-#func outline_object_category(groups: Array -> void:
+#func outline_object_category(group: int) -> void:
+func outline_object_category(groups: Array) -> void:
+	#for object in objects.get_children():
+	#	if group == object.group:
+	#		object.group_highlight()
+	#	else:
+	#		object.stop_group_highlight()
+	print(groups)
 	for object in objects.get_children():
-		if group == object.group:
-			object.group_highlight()
-		else:
+		var is_in_group = false
+		for group in groups:
+			if (group == "idle_process") :
+				continue
+			if group in object.get_groups():
+				object.group_highlight()
+				is_in_group = true
+		if not is_in_group:
 			object.stop_group_highlight()
-#	for object in objects.get_children():
-#		var is_in_group = false
-#		for group in groups:
-#			if group in object.get_groups():
-#				object.group_highlight()
-#				is_in_group = true
-#		if not is_in_group:
-#			object.stop_group_highlight()
 			
 func on_pause() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

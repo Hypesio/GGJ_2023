@@ -23,6 +23,7 @@ extents = Vector3( 1.41578, 1, 0.191641 )
 
 [node name="Diplome" type="RigidBody" groups=["Olivier"]]
 collision_layer = 4
+collision_mask = 0
 mode = 1
 script = ExtResource( 2 )
 size = 0.6

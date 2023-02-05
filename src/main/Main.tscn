@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/building/Floor.tscn" type="PackedScene" id=2]
@@ -24,6 +24,10 @@
 [ext_resource path="res://assets/items/Ticket.tscn" type="PackedScene" id=22]
 [ext_resource path="res://assets/items/Toy.tscn" type="PackedScene" id=23]
 [ext_resource path="res://assets/items/SacRando.tscn" type="PackedScene" id=24]
+[ext_resource path="res://assets/items/Cartepostale.tscn" type="PackedScene" id=25]
+[ext_resource path="res://assets/items/Deck.tscn" type="PackedScene" id=26]
+[ext_resource path="res://assets/items/Lettre.tscn" type="PackedScene" id=27]
+[ext_resource path="res://assets/items/LivreOuvert.tscn" type="PackedScene" id=28]
 
 [sub_resource type="PhysicsMaterial" id=1]
 resource_local_to_scene = true
@@ -53,12 +57,16 @@ transform = Transform( -0.962786, 0, 0.270264, 0, 1, 0, -0.270264, 0, -0.962786,
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46918, 0.539269, -8.04646 )
 visible = false
 physics_material_override = SubResource( 1 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 type = 1
 
 [node name="Postcard2" parent="Objects" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50275, 0.51704, -6.67802 )
 visible = false
 physics_material_override = SubResource( 1 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 type = 1
 group = 1
 
@@ -66,41 +74,87 @@ group = 1
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.771383, 0.166725, -7.83755 )
 visible = false
 physics_material_override = SubResource( 2 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 type = 1
 
 [node name="Loupe" parent="Objects" instance=ExtResource( 14 )]
 transform = Transform( 0.7, 0, 0, 0, -3.0598e-08, 0.7, 0, -0.7, -3.0598e-08, 1.18275, 0.958732, -0.907331 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Trophe" parent="Objects" instance=ExtResource( 15 )]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.372249, 1.51836, -0.720783 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Diplome" parent="Objects" instance=ExtResource( 16 )]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.0179565, 1.77082, 0.0178839 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Louche" parent="Objects" instance=ExtResource( 17 )]
 transform = Transform( 0.0397388, 0, 0.0917651, 0, 0.1, 0, -0.0917651, 0, 0.0397388, 0.794685, 1.04728, -0.0185935 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Medaille" parent="Objects" instance=ExtResource( 18 )]
 transform = Transform( 0.0556577, 5.63657e-05, -0.0830796, -0.000235569, 0.0999997, -8.99709e-05, 0.0830793, 0.000245785, 0.0556576, 0.818092, 1.46981, 2.03427 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="PotHerbe" parent="Objects" instance=ExtResource( 19 )]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0.371577, 1.91691 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Serpe" parent="Objects" instance=ExtResource( 20 )]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 1.02221, 1.02125, 2.53319 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Tasse" parent="Objects" instance=ExtResource( 21 )]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.847675, 1.02555, -0.484157 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="Ticket" parent="Objects" instance=ExtResource( 22 )]
 transform = Transform( 0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 1.40037, 0.980639, -0.237136 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 size = 0.4
 
 [node name="Toy" parent="Objects" instance=ExtResource( 23 )]
 transform = Transform( 0.00299843, 0, 0.0699358, 0, 0.07, 0, -0.0699358, 0, 0.00299843, -3.4746, 1.61561, 2.46839 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
 
 [node name="SacRando" parent="Objects" instance=ExtResource( 24 )]
 transform = Transform( -0.0776457, 0, 0.289778, 0, 0.3, 0, -0.289778, 0, -0.0776457, -1.34425, 0.598272, 1.82724 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
+
+[node name="CartePostale" parent="Objects" instance=ExtResource( 25 )]
+transform = Transform( -0.0082584, 0.149771, -0.000547219, 0.149444, 0.00827651, 0.00990246, 0.00991756, 0, -0.149672, 0.639858, 2.08465, 2.52763 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
+
+[node name="Deck" parent="Objects" instance=ExtResource( 26 )]
+transform = Transform( 0.12, 0, 0, 0, 0.12, 0, 0, 0, 0.12, 1.63557, 0.950885, -0.620995 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
+size = 0.5
+
+[node name="Lettre" parent="Objects" instance=ExtResource( 27 )]
+transform = Transform( 0.15, 0, 0, 0, -0.149856, -0.00658213, 0, 0.00658213, -0.149856, 0.760816, 0.94344, -1.39744 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
+
+[node name="Herbier" parent="Objects" instance=ExtResource( 28 )]
+transform = Transform( 0.35, 0, 0, 0, 0.35, 0, 0, 0, 0.35, 0, 1.0213, -1.33554 )
+base_outline_color = Color( 0.427451, 0.92549, 0.290196, 1 )
+group_outline_color = Color( 0, 1, 0.858824, 1 )
+size = 0.6
 
 [node name="StaticBody" parent="." instance=ExtResource( 8 )]
 
