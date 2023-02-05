@@ -1,6 +1,7 @@
 extends ColorRect
 
-var next_scene_path := "res://src/main/Main.tscn"
+export var next_scene_path := "res://src/main/Main.tscn"
+
 
 onready var anim_player = $AnimationPlayer
 
@@ -13,3 +14,9 @@ func transition_to_main() -> void:
 	yield(anim_player, "animation_finished")
 	# Changes the scene
 	get_tree().change_scene(next_scene_path)
+	
+func end_game() -> void: 
+	anim_player.play("fade_out")
+	# Thanks for playing 
+	# Made for Global Game Jam 2023 in Nantes
+	

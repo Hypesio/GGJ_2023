@@ -105,6 +105,7 @@ func check_end() :
 			break; 
 	if is_correct : 
 		print("The Tree is completed !")
+		get_node("/Main").end_game()
 	
 		
 func on_picture_released(picture_id) : 

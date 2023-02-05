@@ -26,6 +26,7 @@ func _ready() -> void:
 	var mesh = $MeshInstance
 #	if get_node_or_null("MeshInstance2") != null : 
 #		mesh = get_node("MeshInstance2")
+	print(mesh)
 	mesh.get_active_material(0).next_pass = mesh.get_active_material(0).next_pass.duplicate()
 	shader = mesh.get_active_material(0).next_pass
 	shader.set_shader_param("thickness", 0)

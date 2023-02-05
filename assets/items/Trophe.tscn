@@ -21,7 +21,7 @@ surfaces/0 = {
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 1, 2.41293, 1 )
 
-[node name="Trophe" type="RigidBody"]
+[node name="Trophe" type="RigidBody" groups=["Rameaux"]]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 collision_layer = 4
 collision_mask = 0
