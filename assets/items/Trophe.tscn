@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/glb/Material_001.material" type="Material" id=1]
+[ext_resource path="res://src/objects/Object.gd" type="Script" id=2]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Trophe_Cube"
@@ -17,6 +18,16 @@ surfaces/0 = {
 "vertex_count": 554
 }
 
-[node name="Cube" type="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.33213, 0, 0 )
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.326418, 0.673342, 0.33633 )
+
+[node name="RigidBody" type="RigidBody"]
+mode = 1
+script = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -0.78555, 0 )
 mesh = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )

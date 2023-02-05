@@ -5,10 +5,26 @@ onready var objects = $Objects
 onready var familyTree = $GenealogieTree
 onready var menu = $Menu
 onready var transition_rect = $SceneTransitionRect
+onready var doorSound = $AudioStreamPlayer
+onready var footSteps = $AudioStreamPlayerFoot
+onready var footSteps2 = $AudioStreamPlayerFoot2
+
+export var time_between_steps = 0.6
+export var durationSteps = 5.0
+export var timeBeforeDoorSound = 5.0
+export var min_pitch = 0.9
+export var max_pitch = 1.1
+
 
 var photos_picked = []
+var time_passed = 0.0
+var soundDone = false
+var elapsed_time = 0.0
+var rng = RandomNumberGenerator.new()
+var played_right = false
 
 func _ready() -> void:
+	rng.randomize()
 	transition_rect.visible = true
 	transition_rect.modulate.a = 1
 	transition_rect.fade_in()
@@ -16,6 +32,29 @@ func _ready() -> void:
 	player.connect("object_picked", self, "on_object_picked")
 	player.connect("pause", self, "on_pause")
 	menu.connect("play", self, "on_play")
+
+func _process(delta):
+	if (!soundDone) : 
+		time_passed += delta
+		if (timeBeforeDoorSound < time_passed) : 
+			doorSound.play()
+			soundDone = true
+		elif (time_passed < durationSteps) :
+			play_sound(delta)
+
+func play_sound(delta) :
+	elapsed_time += delta
+	if (elapsed_time > time_between_steps) : 
+		elapsed_time = 0.0
+		var pitch = rng.randf_range(min_pitch, max_pitch)
+		if (played_right) : 
+			footSteps.pitch_scale = pitch
+			footSteps.play()
+			played_right = false
+		else :
+			footSteps.pitch_scale = pitch
+			footSteps.play()
+			played_right = true
 
 func on_object_picked(object: Obj) -> void:
 	if object.type == Utils.ObjectType.PHOTO:
