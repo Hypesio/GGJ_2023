@@ -30,6 +30,7 @@ shape = SubResource( 1 )
 [node name="Rotation_Helper" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="Rotation_Helper"]
+current = true
 
 [node name="RayCast" type="RayCast" parent="Rotation_Helper/Camera"]
 enabled = true

@@ -32,18 +32,18 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.47524, 1.47395, 1.4885 )
 [node name="Objects" type="Spatial" parent="."]
 
 [node name="Postcard" parent="Objects" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45899, 0.506267, -2.25637 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45899, 0.523057, -2.25637 )
 physics_material_override = SubResource( 1 )
 type = 1
 
 [node name="Postcard2" parent="Objects" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50275, 0.506267, -0.900535 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.50275, 0.51704, -0.900535 )
 physics_material_override = SubResource( 1 )
 type = 1
 group = 1
 
 [node name="Object" parent="Objects" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.771383, 0.202965, -2.06007 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.771383, 0.166725, -2.06007 )
 physics_material_override = SubResource( 2 )
 type = 1
 
@@ -54,5 +54,5 @@ type = 1
 [node name="Menu" parent="." instance=ExtResource( 9 )]
 
 [node name="SceneTransitionRect" parent="." instance=ExtResource( 10 )]
-modulate = Color( 1, 1, 1, 1 )
+visible = false
 mouse_filter = 2

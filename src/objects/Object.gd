@@ -61,7 +61,6 @@ func interact():
 		var pitch = rng.randf_range(min_pitch, max_pitch)
 		sound_stream.pitch_scale = pitch
 		sound_stream.play()
-	print("interacting...")
 
 func collect():
 	animation_player.play("collect")

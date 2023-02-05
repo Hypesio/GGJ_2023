@@ -2,7 +2,7 @@ extends KinematicBody
 
 const GRAVITY = -24.8
 var vel = Vector3()
-const MAX_SPEED = 20
+const MAX_SPEED = 3
 const JUMP_SPEED = 18
 
 var dir = Vector3()
@@ -20,13 +20,14 @@ onready var footsounds = $FootSounds
 var held_object: RigidBody
 var held_object_old_position: Vector3
 var held_object_old_rotation: Vector3
+var old_rotation_helper_x: float
 
 var focus_on_family_tree = false
 var original_camera_pos: Vector3
 var original_camera_rotation: Vector3
 var collider_family_tree
 var is_crouching := false
-var ACCEL = 4.5
+var ACCEL = 10
 var family_tree_script = null
 var tweening := false
 var was_walking = false
@@ -81,13 +82,13 @@ func process_input(delta):
 		dir += cam_xform.basis.x * input_movement_vector.x
 		# ----------------------------------
 
-		# ----------------------------------
-		# Jumping
-		if is_on_floor():
-			if Input.is_action_just_pressed("movement_jump"):
-				vel.y = JUMP_SPEED
-		# ----------------------------------
-		# ----------------------------------
+#		# ----------------------------------
+#		# Jumping
+#		if is_on_floor():
+#			if Input.is_action_just_pressed("movement_jump"):
+#				vel.y = JUMP_SPEED
+#		# ----------------------------------
+#		# ----------------------------------
 		# Foosteps
 		
 		if (is_on_floor() && !is_on_wall() && input_movement_vector.length() > 0.1) : 
@@ -101,10 +102,10 @@ func process_input(delta):
 	if Input.is_action_just_pressed("interact"):
 		if held_object:
 			emit_signal("object_picked", held_object)
-			held_object.mode = RigidBody.MODE_RIGID
 			var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 			tween.tween_property(held_object, "translation", held_object_old_position, 1.0)
 			tween.parallel().tween_property(held_object, "rotation_degrees", held_object_old_rotation, 1.0)
+			tween.parallel().tween_property(rotation_helper, "rotation_degrees:x", old_rotation_helper_x, 1.0)	
 			tweening = true
 			tween.connect("finished", self, "not_anymore_tweening")
 			held_object.is_held = false
@@ -145,11 +146,17 @@ func process_input(delta):
 				hold_position.translation.z = -held_object.size
 				held_object_old_position = held_object.global_transform.origin
 				held_object_old_rotation = held_object.rotation_degrees
-				held_object.mode = RigidBody.MODE_KINEMATIC
+				old_rotation_helper_x = rotation_helper.rotation_degrees.x
+				var temp_rotation_helper = rotation_helper.duplicate()
+				temp_rotation_helper.rotation_degrees.x = 0
+				add_child(temp_rotation_helper)
+				var temp_hold_position = temp_rotation_helper.get_node("Camera/HoldPosition")
 				var tween := create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
-				tween.tween_property(held_object, "translation", hold_position.global_transform.origin, 1.0)	
+				tween.tween_property(held_object, "translation", temp_hold_position.global_transform.origin, 1.0)
+				tween.parallel().tween_property(rotation_helper, "rotation_degrees:x", 0.0, 1.0)	
 				tweening = true
 				tween.connect("finished", self, "not_anymore_tweening")
+				remove_child(temp_rotation_helper)
 				
 	if Input.is_action_just_pressed("crouch"):
 		camera.global_translation.y -= 0.5
