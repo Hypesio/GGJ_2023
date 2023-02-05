@@ -19,31 +19,18 @@ surfaces/0 = {
 }
 
 [sub_resource type="BoxShape" id=2]
-<<<<<<< HEAD
 extents = Vector3( 1, 2.41293, 1 )
 
 [node name="Trophe" type="RigidBody"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 collision_layer = 4
 collision_mask = 0
-=======
-extents = Vector3( 0.326418, 0.673342, 0.33633 )
-
-[node name="RigidBody" type="RigidBody"]
->>>>>>> d0c679672ac4fc675d29bbd00c9b80bff6c8d047
 mode = 1
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-<<<<<<< HEAD
 mesh = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.605889, 0 )
-=======
-transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, -0.78555, 0 )
-mesh = SubResource( 1 )
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
->>>>>>> d0c679672ac4fc675d29bbd00c9b80bff6c8d047
 shape = SubResource( 2 )
