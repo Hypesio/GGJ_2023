@@ -1,4 +1,4 @@
 extends Node
 
 enum ObjectType {PHOTO, POSTCARD}
-enum Group {FATHER, MOTHER, GRANDMOTHER, GRANDFATHER, ALL}
+enum Group {Silvia, Olivier, Eglantine, Rameaux, ALL}

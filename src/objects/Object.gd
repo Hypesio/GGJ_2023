@@ -3,14 +3,14 @@ extends RigidBody
 class_name Obj
 
 onready var obj_mesh_material: Material
-onready var animation_player := $AnimationPlayer
+onready var animation_player := get_node_or_null("AnimationPlayer")
 onready var sound_stream := get_node_or_null("AudioStreamPlayer3D")
 export var min_pitch = 0.92
 export var max_pitch = 1.07
 var shader: ShaderMaterial
 export var base_outline_color: Color
 export var group_outline_color: Color
-export var size: float
+export var size: float = 2.0
 
 var is_outline := false
 var is_group_outline := false
@@ -24,8 +24,8 @@ var rng = RandomNumberGenerator.new()
 func _ready() -> void:
 	rng.randomize()
 	var mesh = $MeshInstance
-	if get_node_or_null("MeshInstance2") != null : 
-		mesh = get_node("MeshInstance2")
+#	if get_node_or_null("MeshInstance2") != null : 
+#		mesh = get_node("MeshInstance2")
 	mesh.get_active_material(0).next_pass = mesh.get_active_material(0).next_pass.duplicate()
 	shader = mesh.get_active_material(0).next_pass
 	shader.set_shader_param("thickness", 0)
@@ -66,6 +66,7 @@ func interact():
 		sound_stream.play()
 
 func collect():
-	animation_player.play("collect")
-	yield(animation_player, "animation_finished")
-	queue_free()
+	if animation_player != null:
+		animation_player.play("collect")
+		yield(animation_player, "animation_finished")
+		queue_free()
